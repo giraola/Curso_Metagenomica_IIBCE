@@ -72,9 +72,7 @@ CD-ROMs). El sistema de archivos es estructurado de forma jerárquica. La
 punta de la jerarquía es usualmente lo que se llama “root" y se escribe
 como “/". La siguiente figura muestra un ejemplo de esta jerarquía.  
 
-![Ejemplo de estructura de directorios de
-UNIX](figuras/files.jpg)
-<img src="figuras/files.jpg" width="48">
+<img src="figuras/files.jpg" width="150">
 
 ## Sistema multiusuario
 
