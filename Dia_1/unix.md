@@ -27,9 +27,9 @@ El sistema operativo de UNIX consiste en tres partes:
 
   - Programas
 
-El es el corazón del sistema operativo: aloca tiempo y memoria para
+El **kernel** es el corazón del sistema operativo: aloca tiempo y memoria para
 programas, maneja el sistema de archivos y las comunicaciones en
-respuestas a llamadas del sistema. La actúa como interfaz entre el
+respuestas a llamadas del sistema. La **terminal** actúa como interfaz entre el
 usuario y el Kernel. Cuando un usuario se “loggea” al sistema, el
 programa de login chequea el nombre de usuario y la contraseña, y
 seguidamente arranca un programa llamado terminal. La terminal es un
@@ -39,22 +39,22 @@ comenzar el proceso de ejecucíon. Los comandos son en si mismos
 programas: cuando terminan la terminal devuelve otro “prompt" , por
 ejemplo “%".  
 Un ejemplo que ilustra como la trabaja junto con el Kernel, podría ser
-cuando el usuario escribe en la terminal <span>rm myfile</span> (este
+cuando el usuario escribe en la terminal `rm myfile` (este
 comando tiene el efecto de eliminar el archivo myfile). La terminal
-busca en el sistema de archivos el archivo que tiene el programa rm y
+busca en el sistema el archivo que tiene el programa `rm` y
 seguidamente le pide al Kernel a través de llamadas del sistema que
-ejecute el programa rm sobre el archivo myfile. Una vez terminado el
-proceso <span>rm myfile</span>, la terminal devuelve el prompt % al
+ejecute el programa sobre el archivo `myfile`. Una vez terminado el
+proceso, la terminal devuelve el prompt `%` al
 usuario.  
-<span>*<span>Tips:  
+*Tips:  
 Si se ingresa parte del nombre de un comando, un archivo o un
-directorio, presionando la tecla Tab la terminal completa el resto del
+directorio, presionando la tecla **Tab** la terminal completa el resto del
 nombre automáticamente. Si la terminal encuentra mas de un
 comando/archivo/directorio que comienza con la misma parte que tipeó el
 usuario, la misma muestra todas las posibilidades (algunos tipos de
 terminal hacen un “beep" debiendo el usuario ingresar más letras).  
 La terminal guarda la lista de comandos que ingresó el usuario, es decir
-guarda la historia de comandos. </span>*</span>
+guarda la historia de comandos.*
 
 ## La estructura de directorios
 
@@ -73,7 +73,7 @@ punta de la jerarquía es usualmente lo que se llama “root" y se escribe
 como “/". La figura [1](#fig1) muestra un ejemplo de esta jerarquía.  
 
 ![Ejemplo de estructura de directorios de
-UNIX<span label="fig1"></span>](files)
+UNIX](figuras/files.jpg)
 
 ## Sistema multiusuario
 
