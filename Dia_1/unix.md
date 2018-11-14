@@ -1,4 +1,12 @@
-![image](terminales)
+# Día 1: INTRODUCCIÓN A LA LÍNEA DE COMANDOS
+
+## Antes de comenzar...
+Para disponer de los archivos que van a hacer falta en este tutorial, será nacesario que abran una Terminal, y copien y peguen el siguiente código:
+
+```
+git clone https://github.com/iferres/Curso_Metagenomica_IIBCE
+```
+Ante cualquier duda consulten a los docentes. 
 
 # Introducción
 
@@ -37,7 +45,7 @@ interpretador de líneas de comando (CLI, command line interpreter), es
 decir, interpreta los comandos que el usuario ingresa y se asegura de
 comenzar el proceso de ejecucíon. Los comandos son en si mismos
 programas: cuando terminan la terminal devuelve otro “prompt" , por
-ejemplo “%".  
+ejemplo “$".  
 Un ejemplo que ilustra como la trabaja junto con el Kernel, podría ser
 cuando el usuario escribe en la terminal `rm myfile` (este
 comando tiene el efecto de eliminar el archivo myfile). La terminal
@@ -72,7 +80,7 @@ CD-ROMs). El sistema de archivos es estructurado de forma jerárquica. La
 punta de la jerarquía es usualmente lo que se llama “root" y se escribe
 como “/". La siguiente figura muestra un ejemplo de esta jerarquía.  
 
-<img src="figuras/files.jpg" width="150">
+<img src="figuras/files.jpg" width="500">
 
 ## Sistema multiusuario
 
@@ -117,39 +125,54 @@ Una forma de concluir la sesión es ingresando logout en la terminal.
 Una vez hecho el login, el usuario se encuentra en su “home directory",
 que tiene el mismo nombre que el nombre de usuario. Abre una terminal y
 tipea:  
-<span> ejemplosUNIX</span>  
-El comando <span>cd micarpeta</span> lleva al usuario a la carpeta
-llamada micarpeta. También puede colocarse un camino (“path") hacia una
+```
+cd Curso_Metagenomica_IIBCE
+```
+El comando `cd micarpeta` lleva al usuario a la carpeta
+llamada "micarpeta". También puede colocarse un camino (“path") hacia una
 carpeta.  
-  
+
+```
+cd ..
+```
 Este comando lleva al usuario a un nivel más arriba en el sistema de
 archivos, al archivo padre. Es decir, si el usuario se encuentra en la
-carpeta micarpeta, con <span>cd ..</span>, puede volver a salir de la
+carpeta micarpeta, con `cd ..`, puede volver a salir de la
 misma.  
-<span> </span>  
-El comando <span>ls</span> lista los archivos y carpetas visibles dentro
+```
+ls
+```
+El comando `ls` lista los archivos y carpetas visibles dentro
 del directorio en donde el usuario se encuentra. Si se le agrega un
-“switch” al commando (una modificación, en general dada por un “-"),
-se pueden modificar las funciones de los comandos.  
-<span> </span>,  
-lista todos los archivos, también los ocultos que comienzan con un
-punto.  
+“flag” al commando (una modificación, en general dada por un “-"),
+se pueden modificar las funciones de los comandos. Por ejemplo:
+```
+ls -a
+```
+lista todos los archivos, incluyendo los ocultos que comienzan con un
+punto.
 Ingresemos en la terminal:  
-<span> misPruebas</span>,  
+```
+mkdir misPruebas
+```
 este comando sirve para crear directorios dentro del espacio de la
 máquina donde tienes permiso para hacerlo (usualmente en
 /home/usuario). Puedes señalar la ubicación del nuevo directorio con un
 path absoluto o relativo.  
-Ahora ingresemos al nuevo directorio:  
-<span> misPruebas</span>,  
-Creemos una subcarpeta llamada subPruebas:  
-<span> subPruebas</span>  
-Otra posibilidad de hacer lo mismo es:  
-<span> misPruebas/subPruebas</span>,  
-de esta forma, se genera la subcarpeta subPruebas dentro de la carpeta
-misPruebas, automáticamente.  
+Ahora ingresemos al nuevo directorio y creemos un sub directorio:
+```
+cd misPruebas
+mkdir subPruebas
+```
+Otra posibilidad de hacer lo mismo pero sin entrar previamente al directorio "misPruebas" sería:  
+```
+mkdir misPruebas/subPruebas
+```
+De esta forma, se genera la subcarpeta "subPruebas" dentro de la carpeta
+"misPruebas", aunque sigamos trabajando en `~/` ("/home/usuario").
+
 Muchas veces uno pierde la noción de en qué carpeta se encuentra. Para
-ello se puede utilizar el comando <span>pwd</span>. Ingresa el comando
+ello se puede utilizar el comando `pwd` (de _Print Working Directory_). Ingresa el comando
 en la terminal y observa el resultado.  
 . ?‘Qué retorna este comando?  
 Si estás perdido, y no sabes en qué carpeta estás, el comando
