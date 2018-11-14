@@ -70,10 +70,11 @@ en más discos (igual que en Windows, en donde existen muchas particiones
 llamadas A:, B:, C:, etc que pueden ser discos duros, pen drive,
 CD-ROMs). El sistema de archivos es estructurado de forma jerárquica. La
 punta de la jerarquía es usualmente lo que se llama “root" y se escribe
-como “/". La figura [1](#fig1) muestra un ejemplo de esta jerarquía.  
+como “/". La siguiente figura muestra un ejemplo de esta jerarquía.  
 
 ![Ejemplo de estructura de directorios de
 UNIX](figuras/files.jpg)
+<img src="figuras/files.jpg" width="48">
 
 ## Sistema multiusuario
 
