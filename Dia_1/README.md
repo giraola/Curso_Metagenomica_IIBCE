@@ -176,7 +176,7 @@ El _flag_ `-d` indica el caracter delimitador, y el `-f4` que devuelva la column
 
 # Conceptos: entrada y salida
 
-Los conceptos de entrada/salida o “input/output (I/O)”, tienen que ver con el ingreso de datos al sistema o a un programa y con la salida que ese sistema o programa devuelve. Por ejemplo, escribir un comando `ls` con el teclado es una forma de input, mientras que el listado de archivos que devuelve el comando `ls` en el monitor es una forma de output. El teclado y el monitor se consideran los medios de entrada y salida estándar, _stdin_ y _stdout_ respectivamente. Unos de los comandos principales asociados a la salida es el `echo`. El mismo permite “imprimir” cosas en la pantalla. Por defecto recibe cadenas de texto entre comillas (simples o dobles) y la saca a la pantalla, aunque se puede redirigir la salida a otro sitio. Además, se puede usar para realizar operaciones aritméticas con la terminal.  
+Los conceptos de entrada/salida o “input/output (I/O)”, tienen que ver con el ingreso de datos al sistema o a un programa y con la salida que ese sistema o programa devuelve. Por ejemplo, escribir un comando `ls` con el teclado es una forma de input, mientras que el listado de archivos que devuelve el comando `ls` en el monitor es una forma de output. El teclado y el monitor se consideran los medios de entrada y salida estándar, _stdin_ y _stdout_ respectivamente. Unos de los comandos principales asociados a la salida es el `echo`. El mismo permite “imprimir” cosas en la pantalla. Por defecto recibe cadenas de texto entre comillas (simples o dobles) y la saca a la pantalla, aunque se puede redirigir la salida a otro sitio. Además, se puede usar para realizar operaciones aritméticas con la terminal.
 
 **Tarea:**
 Ingresa los siguientes comandos:
@@ -191,50 +191,44 @@ echo "$[6*9]"
 
 # Pipes
 
-Hasta ahora hemos visto cuáles son las entradas de datos y salidas de
-algunas de las utilidades más comunes. Lo siguiente es lograr conectar
-de alguna forma la salida de un programa y hacer que otro lea de ella.
-Existen algunos caracteres (\(\mid, < ,>, \gg\)) que nos permiten crear
-estas conexiones o pipes (tuberías) entre programas en la terminal.  
-El efecto de los pipes es fácil de entender. Un A \(\mid\) B indica que
-la salida de A, en lugar de hacer su salida por defecto, va a ser
-enviada al stdin de B para convertirse en los datos de entrada del
-programa B. Los caracteres \(<\) y \(>\) también permiten crear pipes;
-generalmente trabajan con un fichero de un lado y un comando del otro
-(en el sentido comando \> fichero). Cabe destacar, que en caso de no
-existir el fichero que recibe la salida de antemano, se genera
-automáticamente. Además se pueden agregar nuevos datos a un fichero
-preexistente (“appendear”) por medio de \(\gg\).  
-<span>Tarea:  
-Prueba estas líneas de comando y verifica el contenido de los ficheros
-generados usando cat, more o less.  
-<span> “close” cancion.txt \(\mid\) wc</span>  
-<span> “close” cancion.txt \> close.txt</span>  
-<span> “nothing” cancion.txt \(\gg\) close.txt</span>  
-<span> “I” cancion.txt \(\mid\) sort \(\gg\) nothing</span>  
-</span> El comando <span>sort</span> ordena una lista de caracteres. A
-veces, como en este caso, hay varias líneas repetidas, y uno está
-interesado sólamente en las no repetidas. El comando <span>uniq</span>
-imprime sólo una aparición de cada línea repetida.  
-<span>Tarea:  
-Prueba esos comandos.  
-<span> close.txt</span>  
-Posiciónate en la carpeta micarpeta. Ahora prueba lo siguiente:  
-<span> \> nombre\_lista</span>  
-Chequea cuál es la función del switch -1 en el comando <span>ls</span>.
-?‘Cuántos archivos hay en la carpeta?  
-?‘Cuál es la función de este switch?  
-</span>
+Hasta ahora hemos visto cuáles son las entradas de datos y salidas de algunas de las utilidades más comunes. Lo siguiente es lograr conectar de alguna forma la salida de un programa y hacer que otro lea de ella.
 
-# Ejercicio final
+Existen algunos caracteres (`|`, `>`, `<`, `>>`) que nos permiten crear estas conexiones o _pipes_ (tuberías) entre programas en la terminal. El efecto de los _pipes_ es fácil de entender. `A | B` indica que la salida de `A`, en lugar de hacer su salida por defecto (_stout_), va a ser enviada al _stdin_ de `B`. Los caracteres `<` y `>` también permiten crear _pipes_; generalmente trabajan con un fichero de un lado y un comando del otro (en el sentido `comando > fichero`). Cabe destacar, que en caso de no existir el fichero que recibe la salida de antemano, se genera automáticamente. Además se pueden agregar nuevos datos a un fichero preexistente sin sobreescribirlo por medio de `>>`.
 
-Vuelve al archivo procariotas\_patogenicidad.csv. ?‘Puedes determinar
-cuántos organismos hay del reino bacteria y cuántos del reino arquea?
-?‘Cuántas categorías hay en la tabla para el requerimiento de oxígeno
-(“Oxygen Req”)? ?‘Cuántos organismos son aeróbicos? ?‘Cuántos organismos
-son facultativos? ?‘Cuántos organismos son no-patogénicos? Puedes
-utilizar para esto todo lo visto hasta ahora.
+**Tarea:**
+Prueba estas líneas de comando y verifica el contenido de los ficheros generados usando cat, more o less.
+```
+grep "close" song.txt | wc
+grep "close" song.txt > close.txt
+grep "nothing" song.txt >> close.txt
+grep "I" song.txt | sort | >> nothing.txt
+```
+El comando `sort` ordena alfabéticamente una lista de cadena de caracteres. A veces, como en este caso, hay varias líneas repetidas, y uno está interesado sólamente en las no repetidas. El comando `uniq` imprime sólo una aparición de cada línea repetida.
 
-1.  para loggearse como root se ingresa en la terminal su + ENTER y
-    luego se ingresa la clave de root, que debe de ser proporcionada por
-    el administrador de sistema. Más detalles más adelante.
+**Tarea:**
+Prueba esos comandos.
+```
+uniq close.txt
+```
+Posiciónate en la "carpeta misPruebas". Ahora prueba lo siguiente:
+```
+ls -1 > nombre_lista
+```
+Chequea cuál es la función del _flag_ -1 en el comando `ls`. ¿Cuántos archivos hay en la carpeta? 
+```
+ls -ltr
+```
+¿Cuál es la función de estos _flags_?
+
+
+## Ejercicio final
+
+Vuelve al archivo "procariotas\_patogenicidad.csv". 
+
+ - ¿Puedes determinar cuántos organismos hay del reino bacteria y cuántos del reino arquea?
+ - ¿Cuántas categorías hay en la tabla para el requerimiento de oxígeno (“Oxygen Req”)?
+ - ¿Cuántos organismos son aeróbicos? 
+ - ¿Cuántos organismos son facultativos? 
+ - ¿Cuántos organismos son no-patogénicos? 
+
+
