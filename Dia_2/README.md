@@ -1,6 +1,6 @@
 # Día 2: Control de calidad, ensamblado, y anotación de fósmidos de interés.
 
-En este tutorial se muestran de forma breve los métodos computacionales para el análisis de fósmidos secuenciados mediante la tecnología IonTorrent. Los pasos se aplican sobre un caso en particular, contenido en este repositorio, pero debería ser posible aplicarlos sobre otros fósmidos, lo cual se alienta de modo de permitir la comparación de resultados entre los estudiantes. Consultar a los docentes por otros sets de datos.
+En este tutorial se muestran de forma breve los métodos computacionales básicos para el análisis de fósmidos secuenciados mediante la tecnología IonTorrent. Los pasos se aplican sobre un caso en particular, contenido en este repositorio, pero debería ser posible aplicarlos sobre otros fósmidos, lo cual se alienta de modo de permitir la comparación de resultados entre los estudiantes. Consultar a los docentes por otros sets de datos.
 
 ## 0 - Extracción y descompresión de archivos fastq
 Abra una terminal y ubíquese en el directorio de trabajo "IonTorrentReads", dentro del directorio correspondiente al día 2. Si descargó los archivos en el _home_, entonces:
@@ -29,4 +29,90 @@ Si quisiéramos saber cuántos _reads_ contiene el fastq, no nos sirve contar lo
 
 
 
-## 1 -  Control de calidad de 
+## 1 -  Control de calidad de los reads
+
+Para analizar la calidad de la secuenciación vamos a utilizar [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), el cual devuelve una serie de estadísticas sobre el archivo fastq.
+
+```
+fastqc Csd6.fastq
+ls -ltr
+```
+
+FastQC devuelve un reporte con extensión "html" que puede abrirse con cualquier navegador.
+```
+firefox Csd6_fastqc.html
+```
+En este reporte aparecen una serie de estadísticas en cuanto a calidad, largo, secuencias repetidas, etc. En el primer gráfico puede observarse algo como esto:
+<img src="figuras/fastqc_hist.png" width="1000">
+
+En general se observa que los _reads_ tienen buena calidad, pero hacia el final de los mismos esta cae. Este perfil es típico de las tecnologías NGS, y se da porque como se trata de secuenciación por síntesis, las polimerasas comienzan a fallar, desfasarse y soltarse de la hebra de ADN, por lo que la calida de las lecturas comienza a ser cada vez más ambigua.
+
+**Ejercicio:**
+ - Discuta con sus compañeros el resto de los gráficos. Consulten a los docentes ante cualquier duda.
+
+## 2 - Trimming
+
+Como vimos, hacia el extremo 3' de los _reads_ la calidad comienza a disminuir y esto puede llevar a errores cuando se ensamblen, más adelante. Es necesario entonces recortar (_to trim_) los extremos de mala calidad. Para esto vamos a utilizar [trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic). 
+
+Una calidad de 15 se considera  relativamente aceptable, por lo que vamos a utilizar la opción SLIDINGWINDOW con un tamaño de ventana de 5, y una calidad promedio de al menos 15. Por otro lado vamos a descartar todos aquellos _reads_ cuyo largo, luego del proceso anterior, no supere los 50 pb. Al archivo de salida le vamos a llamar "Cds6_trim.fastq", para diferenciarlo del original.
+
+```
+trimmomatic SE -phred33 Csd6.fastq Csd6_trim.fastq SLIDINGWINDOW:5:15 MINLEN:50
+ls -lhtr
+```
+
+**Ejercicio:**
+ - ¿Qué significa cada parámetro?
+ - ¿Qué información devuelve trimmomatic?
+ - Analice la calidad del nuevo fastq utilizando FastQC (Esto debe hacerse siempre luego del _trimming_). Compare ambos histogramas.
+
+
+Considerando que hay que buscar un equilibrio entre mantener una buena cantidad de datos, pero que estos sean de calidad, los parámetros pueden ajustarse. Un buen análisis implica probar varias veces, con distintos parámetros, y seleccionar el resultado que nos parezca mejor. Nunca quedarse con un sólo resultado, ni con los parámetros que vienen seteados por _default_ en los programas. Intente correr trimmomatic con otros parámetros (el manual se encuentra en el link del programa, más arriba), y compare resultados. El tutorial sigue con el archivo de salida del ejemplo.
+
+
+## 3 - Ensamblado
+
+Para ensamblar vamos a usar [SPAdes](http://cab.spbu.ru/software/spades/), un ensamblador _de novo_. Para ver qué opciones admite, o bien diríjase al manual en el link, o llame al programa sin usar ningún argumento:
+```
+spades.py
+```
+
+SPAdes admite un gran número de parámetros y opciones. Nosotros vamos a utilizar algunas de ellas simplemente para simplificar, pero está bueno que lean bien los manuales de los programas (y en lo posible las publicaciones) antes de utilizarlos. En particular, nuestros reads son de IonTorrent por lo que son _single end_. Además vamos a largar los procesos utilizando 2 procesadores para hacer más rápido los ensamblados.
+
+```
+spades.py --iontorrent -s Csd6_trim.fastq --threads 2 -o spades_assembly
+ls -ltr
+```
+
+Como resultado obvtuvimos un directorio ("spades_assembly") el cual contiene el ensamblado. En este tutorial nos vamos a centrar solamente en el archivo "contigs.fasta".
+
+**Ejercicio:**
+ - ¿Cuántos contigs (secuencias) tiene nuestro ensamblado?
+
+## 4 - Control de calidad del ensamblado
+
+Una vez ensamblado debemos chequear la calidad del mismo. Utilizaremos [Quast](http://quast.bioinf.spbau.ru/) para dicho propósito. Llame al programa sin argumentos para ver las opciones básicas que admite (para ver todas las opciones, agregue el _flag_ `--help` al llamado).
+```
+quast.py
+```
+
+Básicamente necesitamos el archivo de entrada, y un nombre para el directorio de salida:
+```
+quast.py -o quast_qc spades_assembly/contigs.fasta 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
