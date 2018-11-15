@@ -25,10 +25,10 @@ El sistema operativo de UNIX consiste en tres partes:
 
   - Programas
 
-El **kernel** es el corazón del sistema operativo: aloca tiempo y memoria para programas, maneja el sistema de archivos y las comunicaciones en respuestas a llamadas del sistema. La **terminal** actúa como interfaz entre el usuario y el Kernel. Cuando un usuario se “loggea” al sistema, el programa de login chequea el nombre de usuario y la contraseña, y seguidamente arranca un programa llamado terminal. La terminal es un interpretador de líneas de comando (CLI, command line interpreter), es decir, interpreta los comandos que el usuario ingresa y se asegura de comenzar el proceso de ejecucíon. Los comandos son en si mismos programas: cuando terminan la terminal devuelve otro “prompt" , por ejemplo “$".   Un ejemplo que ilustra como la trabaja junto con el Kernel, podría ser cuando el usuario escribe en la terminal `rm myfile` (este comando tiene el efecto de eliminar el archivo myfile). La terminal busca en el sistema el archivo que tiene el programa `rm` y seguidamente le pide al Kernel a través de llamadas del sistema que ejecute el programa sobre el archivo `myfile`. Una vez terminado el proceso, la terminal devuelve el prompt `%` al usuario.  
+El **kernel** es el corazón del sistema operativo: aloca tiempo y memoria para programas, maneja el sistema de archivos y las comunicaciones en respuestas a llamadas del sistema. La **terminal** actúa como interfaz entre el usuario y el Kernel. Cuando un usuario se “loggea” al sistema, el programa de login chequea el nombre de usuario y la contraseña, y seguidamente arranca un programa llamado terminal. La terminal es un interpretador de líneas de comando (CLI, command line interpreter), es decir, interpreta los comandos que el usuario ingresa y se asegura de comenzar el proceso de ejecucíon. Los **comandos** son en sí mismos programas: cuando terminan la terminal devuelve otro “prompt" , por ejemplo “$".   Un ejemplo que ilustra como la trabaja junto con el Kernel, podría ser cuando el usuario escribe en la terminal `rm myfile` (este comando tiene el efecto de eliminar el archivo "myfile"). La terminal busca en el sistema el archivo que tiene el programa `rm` y seguidamente le pide al Kernel a través de llamadas del sistema que ejecute el programa sobre el archivo `myfile`. Una vez terminado el proceso, la terminal devuelve el prompt `$` al usuario.  
 
 *Tips:  
-Si se ingresa parte del nombre de un comando, un archivo o un directorio, presionando la tecla **Tab** la terminal completa el resto del nombre automáticamente. Si la terminal encuentra mas de un comando/archivo/directorio que comienza con la misma parte que tipeó el usuario, la misma muestra todas las posibilidades (algunos tipos de terminal hacen un “beep" debiendo el usuario ingresar más letras).   La terminal guarda la lista de comandos que ingresó el usuario, es decir guarda la historia de comandos.*
+Si se ingresa parte del nombre de un comando, un archivo o un directorio, presionando la tecla **Tab** la terminal completa el resto del nombre automáticamente. Si la terminal encuentra mas de un comando/archivo/directorio que comienza con la misma parte que tipeó el usuario, la misma muestra todas las posibilidades (algunos tipos de terminal hacen un “beep" debiendo el usuario ingresar más letras). La terminal guarda la lista de comandos que ingresó el usuario, es decir guarda la historia de comandos.*
 
 ## La estructura de directorios
 
@@ -80,7 +80,7 @@ mkdir misPruebas/subPruebas
 De esta forma, se genera la subcarpeta "subPruebas" dentro de la carpeta "misPruebas", aunque sigamos trabajando en `~/` ("/home/usuario").
 
 Muchas veces uno pierde la noción de en qué carpeta se encuentra parado. Para ello se puede utilizar el comando `pwd` (de _Print Working Directory_). Ingresa el comando en la terminal y observa el resultado.  
- - ?‘Qué retorna este comando?  
+ - ¿Qué retorna este comando?
 
 El comando `man` es de mucha utilidad. Este comando, usado bajo la forma `man comando`, despliega información acerca del comando requerido. Indica cuáles son las opciones y argumentos asociados a cada comando. Prueba de obtener ayuda sobre el comando `ls` (Para salir del modo ayuda, presionar la tecla "Q").
 
@@ -124,9 +124,12 @@ lo cual eliminaría todos aquellos archivos que contengan _cualquier_ (\*) carac
 Cree un nuevo directorio en el _home_ utilizando un nuevo nombre, por ejemplo "misPruebas2". 
 Copia el contenido de "misPruebas" al nuevo directorio, utilzando los comandos aprendidos anteriormente. Muévete hacia la carpeta nueva y genera copias del archivo cancion.txt, llamadas cancion2.txt, cancion22.txt, cancion3.txt y cancion32.txt. Elimína todos aquellos archivos, dentro de "misPruebas2" que terminen con "2.txt", utilizando las _wildcards_.
 
-¿Cuáles son los archivos quedan en la carpeta?  
+ - ¿Cuáles son los archivos quedan en la carpeta?  
 Ahora intenta eliminar el directorio creado. Prueba lo siguiente:  
-`rm misPruebas2` ¿Funciona?
+```
+rm misPruebas2
+``` 
+ - ¿Funciona?
 
 # Mostrar los contenidos de los archivos en la terminal
 
@@ -139,8 +142,8 @@ clear
 El “prompt” aparece en la primera línea de la terminal. Para observar el contenido de un archivo en la terminal, existen varios
 comandos. Uno es utilizar `cat nombreDeArchivo.txt`
 
-**Tarea:**
-Prueba visualizar el archivo "jejuniM1.fna" dentro del directorio "~/Curso\_Metagenomica\_IIBCE/Files/". Otro posible comando es `less`. Pruébalo con el mismo archivo.
+**Ejercicio:**
+Prueba visualizar el archivo "Cfetus.fna" dentro del directorio "~/Curso\_Metagenomica\_IIBCE/Files/". Otro posible comando es `less`. Pruébalo con el mismo archivo.
 
 La diferencia entre ambos comandos es que `cat` imprime todo el archivo en la terminal, aún si el mismo es demasiado largo y no entra en la terminal. Si esto pasa, uno queda mirando el final del archivo y tiene que hacer “scroll” hacia arriba para ver el comienzo del archivo. El comando `less` imprime el contenido página a página, pudiendo pasar de una a otra con el espacio. Para salir de `less`, precione la tecla "Q".
 
@@ -155,15 +158,22 @@ Pruébalo con el archivo "song.txt". Este comando muestra por defecto las \(10\)
 El comando `tail` muestra las últimas líneas del archivo especificado, de forma análoga al comando anterior. Pruébalo con el archivo `song.txt`. ¿Cómo puedes hacer para ver las últimas 15 líneas de un archivo? 
 
 Muchas veces vamos a estar interesados en saber cuántas palabras tiene un archivo. El comando para esto es `wc` (_word count_). El mismo tiene varios switchs.  
-**Tarea:**
+**Ejercicio:**
 Investiga con la ayuda de `man` qué opciones existen para `wc`.
-¿Cuántos caracteres tiene el archivo "song.txt"?  
+ - ¿Cuántos caracteres tiene el archivo "song.txt"?  
 
 El comando `grep` es utilizado para buscar palabras dentro de un texto. El mismo devuelve la línea del archivo en donde aparece la palabra. Investiga el manual por las opciones que admite.
-**Tarea:**
-Busquemos por ejemplo, la secuencia “ATGCTTA” en el archivo "jejuniM1.fna". ¿Aparece alguna vez? Busca ahora “ATGCTA”, ¿cuántas veces aparece? ¿Puedes contar las veces que aparece utilizando grep con algún _flag_? ¿Qué problemas presenta buscar secuencias con este comando en estos archivos?
+**Ejercicio:**
+Busquemos por ejemplo, la secuencia “ATGCTTA” en el archivo "Cfetus.fna". 
+ - ¿Aparece alguna vez? 
+Busca ahora “ATGCTA”. 
+ - ¿Cuántas veces aparece? 
+ - ¿Puedes contar las veces que aparece utilizando grep con algún _flag_? 
+ - ¿Qué problemas presenta buscar secuencias con este comando en estos archivos? 
+Conociendo la estructura del formato FASTA,
+ - ¿Cuántas secuencias (contigs) contiene el archivo?
 
-Muchas veces en bioinformática tenemos que manipular tablas de datos, el comando <span>cut</span> puede ser muy útil para manipularlas. Intenta visualizar primero el archivo "procariotas\_patogenicidad.csv", que contiene una tabla con datos fenotípicos de las bacterias. Ingresa
+Muchas veces en bioinformática tenemos que manipular tablas de datos, el comando `cut` puede ser muy útil para manipularlas. Intenta visualizar primero el archivo "procariotas\_patogenicidad.csv", que contiene una tabla con datos fenotípicos de las bacterias. Ingresa
 en la terminal:  
 ```
 head procariotas_patogenicidad.csv
@@ -178,7 +188,7 @@ El _flag_ `-d` indica el caracter delimitador, y el `-f4` que devuelva la column
 
 Los conceptos de entrada/salida o “input/output (I/O)”, tienen que ver con el ingreso de datos al sistema o a un programa y con la salida que ese sistema o programa devuelve. Por ejemplo, escribir un comando `ls` con el teclado es una forma de input, mientras que el listado de archivos que devuelve el comando `ls` en el monitor es una forma de output. El teclado y el monitor se consideran los medios de entrada y salida estándar, _stdin_ y _stdout_ respectivamente. Unos de los comandos principales asociados a la salida es el `echo`. El mismo permite “imprimir” cosas en la pantalla. Por defecto recibe cadenas de texto entre comillas (simples o dobles) y la saca a la pantalla, aunque se puede redirigir la salida a otro sitio. Además, se puede usar para realizar operaciones aritméticas con la terminal.
 
-**Tarea:**
+**Ejercicio:**
 Ingresa los siguientes comandos:
 ```
 echo "vamos a calcular"
@@ -186,7 +196,7 @@ echo "6*9"
 echo "[6*9]"
 echo "$[6*9]"
 ```
-¿Cuál crees que es la finalidad de `$` en el comando anterior?
+ - ¿Cuál crees que es la finalidad de `$` en el comando anterior?
 
 
 # Pipes
@@ -195,7 +205,7 @@ Hasta ahora hemos visto cuáles son las entradas de datos y salidas de algunas d
 
 Existen algunos caracteres (`|`, `>`, `<`, `>>`) que nos permiten crear estas conexiones o _pipes_ (tuberías) entre programas en la terminal. El efecto de los _pipes_ es fácil de entender. `A | B` indica que la salida de `A`, en lugar de hacer su salida por defecto (_stout_), va a ser enviada al _stdin_ de `B`. Los caracteres `<` y `>` también permiten crear _pipes_; generalmente trabajan con un fichero de un lado y un comando del otro (en el sentido `comando > fichero`). Cabe destacar, que en caso de no existir el fichero que recibe la salida de antemano, se genera automáticamente. Además se pueden agregar nuevos datos a un fichero preexistente sin sobreescribirlo por medio de `>>`.
 
-**Tarea:**
+**Ejercicio:**
 Prueba estas líneas de comando y verifica el contenido de los ficheros generados usando cat, more o less.
 ```
 grep "close" song.txt | wc
@@ -205,7 +215,7 @@ grep "I" song.txt | sort | >> nothing.txt
 ```
 El comando `sort` ordena alfabéticamente una lista de cadena de caracteres. A veces, como en este caso, hay varias líneas repetidas, y uno está interesado sólamente en las no repetidas. El comando `uniq` imprime sólo una aparición de cada línea repetida.
 
-**Tarea:**
+**Ejercicio:**
 Prueba esos comandos.
 ```
 uniq close.txt
@@ -214,11 +224,12 @@ Posiciónate en la "carpeta misPruebas". Ahora prueba lo siguiente:
 ```
 ls -1 > nombre_lista
 ```
-Chequea cuál es la función del _flag_ -1 en el comando `ls`. ¿Cuántos archivos hay en la carpeta? 
+Chequea cuál es la función del _flag_ -1 en el comando `ls`. 
+ - ¿Cuántos archivos hay en la carpeta? 
 ```
 ls -ltr
 ```
-¿Cuál es la función de estos _flags_?
+ - ¿Cuál es la función de estos _flags_?
 
 
 ## Ejercicio final
