@@ -43,7 +43,7 @@ FastQC devuelve un reporte con extensión "html" que puede abrirse con cualquier
 firefox Csd6_fastqc.html
 ```
 En este reporte aparecen una serie de estadísticas en cuanto a calidad, largo, secuencias repetidas, etc. En el primer gráfico puede observarse algo como esto:
-<img src="figuras/fastqc_hist.png" width="1000">
+<img src="figuras/fastqc_hist.png" width="700">
 
 En general se observa que los _reads_ tienen buena calidad, pero hacia el final de los mismos esta cae. Este perfil es típico de las tecnologías NGS, y se da porque como se trata de secuenciación por síntesis, las polimerasas comienzan a fallar, desfasarse y soltarse de la hebra de ADN, por lo que la calida de las lecturas comienza a ser cada vez más ambigua.
 
