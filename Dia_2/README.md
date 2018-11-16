@@ -152,7 +152,7 @@ Dentro del directorio de salida existen varios archivos con distinta extensión.
 
 ## 6 - Bonus track: Visualización
 
-Para visualizar genomas (en nuestro caso el fósmido de interés) asociados a su anotación vamos a utilizar el _genome browser_ [Artemis](http://sanger-pathogens.github.io/Artemis/Artemis/). El ejecutable se encuentra en el directorio "~/Descargas/artemis/" (o "~/Downloads/artemis/"), y vamos a llamarlo de la siguiente forma:
+Para visualizar genomas (en nuestro caso el fósmido de interés) asociados a su anotación vamos a utilizar el _genome browser_ [Artemis](http://sanger-pathogens.github.io/Artemis/Artemis/). El ejecutable se encuentra en el directorio "\~/Descargas/artemis/" (o "\~/Downloads/artemis/"), y vamos a llamarlo de la siguiente forma:
 
 ```
 ~/Descargas/artemis/art Csd6.gff
