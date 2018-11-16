@@ -112,7 +112,7 @@ evince quast_qc/report.pdf
 O para verlos en el navegador:
 
 ```
-firefox icarus.html
+firefox quast_qc/icarus.html
 ```
 
 **Ejercicio:**
