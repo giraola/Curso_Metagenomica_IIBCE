@@ -1,14 +1,6 @@
 # Día 1: INTRODUCCIÓN A LA LÍNEA DE COMANDOS
 
-## Antes de comenzar...
-Para disponer de los archivos que van a hacer falta en este tutorial, será nacesario que abran una Terminal, y copien y peguen el siguiente código:
-
-```
-git clone https://github.com/iferres/Curso_Metagenomica_IIBCE
-```
-Ante cualquier duda consulten a los docentes. 
-
-# Introducción
+## Introducción
 
 UNIX es un sistema operativo desarrollado en los años sesentas y que sigue actualizándose constantemente. Un sistema operativo lo definimos, en esta instancia, como un conjunto de programas que hacen funcionar a la computadora. UNIX es un sistema estable, de múltiples usuarios y “multi-tasking", diseñado tanto para servidores, como para computadoras de escritorio y portátiles. Este sistema operativo tiene una interfaz gráfica (GUI, graphical user interface) similar a la de Microsoft Windows, lo que lo hace más fácil de utilizar. Sin embargo,
 existen operaciones que no pueden realizarse a través de la interfaz gráfica, por lo que son necesarios conocimientos de línea de comando de UNIX. No todo se puede solucionar con una ventanita\!  
