@@ -228,7 +228,7 @@ ls -ltr
 
 Vuelve al archivo "procariotas\_patogenicidad.csv". 
 
- - ¿Puedes determinar cuántos organismos hay del reino bacteria y cuántos del reino arquea?
+ - ¿Puedes determinar cuántos organismos hay del dominio bacteria y cuántos del dominio arquea?
  - ¿Cuántas categorías hay en la tabla para el requerimiento de oxígeno (“Oxygen Req”)?
  - ¿Cuántos organismos son aeróbicos? 
  - ¿Cuántos organismos son facultativos? 
