@@ -2,7 +2,7 @@
 
 En este tutorial se muestran de forma breve los métodos computacionales básicos para el análisis de fósmidos seleccionados, secuenciados mediante la tecnología IonTorrent. Los pasos se aplican sobre un caso en particular, contenido en este repositorio, pero debería ser posible aplicarlos sobre otros fósmidos, lo cual se alienta de modo de permitir la comparación de resultados entre los estudiantes. Consultar a los docentes por otros sets de datos.
 
-<img src="figuras/workflow.jpeg" width="400">
+<img src="figuras/workflow.jpeg" width="600">
 
 ***Nota:** Los programas que se usan en este tutorial (excepto aquellos comandos que vimos en el práctico pasado) NO vienen, en general, instalados en Linux. Fueron instalados previamente por los docentes. Instalar programas en Linux no es tan trivial como en Windows, y requiere cierto entendimiento del funcionamiento del sistema operativo, y bastante paciencia.*
 
