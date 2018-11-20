@@ -1,13 +1,12 @@
 # Día 1: INTRODUCCIÓN A LA LÍNEA DE COMANDOS
-<img src="figuras/workflow.jpeg" width="500">
 
 
 ## Introducción
 
 UNIX es un sistema operativo desarrollado en los años sesentas y que sigue actualizándose constantemente. Un sistema operativo lo definimos, en esta instancia, como un conjunto de programas que hacen funcionar a la computadora. UNIX es un sistema estable, de múltiples usuarios y “multi-tasking", diseñado tanto para servidores, como para computadoras de escritorio y portátiles. Este sistema operativo tiene una interfaz gráfica (GUI, graphical user interface) similar a la de Microsoft Windows, lo que lo hace más fácil de utilizar. Sin embargo,
-existen operaciones que no pueden realizarse a través de la interfaz gráfica, por lo que son necesarios conocimientos de línea de comando de UNIX. No todo se puede solucionar con una ventanita\!  
+existen operaciones que no pueden realizarse a través de la interfaz gráfica, por lo que son necesarios conocimientos de línea de comando de UNIX. No todo se puede solucionar con una ventanita!
 
-Existen varias versiones de UNIX, aunque todas comparten las mismas características. Las variedad más popular es GNU/Linux. Linux viene a su vez en varios “flavors", por ejemplo FEDORA, Red Hat, Centos, etc.
+Existen varias versiones de UNIX, aunque todas comparten las mismas características. Las variedad más popular es GNU/Linux. Linux viene a su vez en varios “flavors", por ejemplo FEDORA, Red Hat, Centos, etc. MacOS también es derivado de UNIX, por lo cual los comandos básicos de la línea de comando son similares.
 
 ## El sistema operativo
 
@@ -22,22 +21,25 @@ El sistema operativo de UNIX consiste en tres partes:
 El **kernel** es el corazón del sistema operativo: aloca tiempo y memoria para programas, maneja el sistema de archivos y las comunicaciones en respuestas a llamadas del sistema. La **terminal** actúa como interfaz entre el usuario y el Kernel. Cuando un usuario se “loggea” al sistema, el programa de login chequea el nombre de usuario y la contraseña, y seguidamente arranca un programa llamado terminal. La terminal es un interpretador de líneas de comando (CLI, command line interpreter), es decir, interpreta los comandos que el usuario ingresa y se asegura de comenzar el proceso de ejecucíon. Los **comandos** son en sí mismos programas: cuando terminan la terminal devuelve otro “prompt" , por ejemplo “$".   Un ejemplo que ilustra como la trabaja junto con el Kernel, podría ser cuando el usuario escribe en la terminal `rm myfile` (este comando tiene el efecto de eliminar el archivo "myfile"). La terminal busca en el sistema el archivo que tiene el programa `rm` y seguidamente le pide al Kernel a través de llamadas del sistema que ejecute el programa sobre el archivo `myfile`. Una vez terminado el proceso, la terminal devuelve el prompt `$` al usuario.  
 
 *Tips:  
-Si se ingresa parte del nombre de un comando, un archivo o un directorio, presionando la tecla **Tab** la terminal completa el resto del nombre automáticamente. Si la terminal encuentra mas de un comando/archivo/directorio que comienza con la misma parte que tipeó el usuario, la misma muestra todas las posibilidades (algunos tipos de terminal hacen un “beep" debiendo el usuario ingresar más letras). La terminal guarda la lista de comandos que ingresó el usuario, es decir guarda la historia de comandos.*
+Si se ingresa parte del nombre de un comando, un archivo o un directorio, presionando la tecla **Tab** la terminal completa el resto del nombre automáticamente. Si la terminal encuentra mas de un comando/archivo/directorio que comienza con la misma parte que tipeó el usuario, la misma muestra todas las posibilidades (algunos tipos de terminal hacen un “beep" debiendo el usuario ingresar más letras). La terminal guarda la lista de comandos que ingresó el usuario, es decir guarda el historial de comandos.*
 
 ## La estructura de directorios
 
-Todo en UNIX es un archivo o un proceso. Un proceso es un programa ejecutable identificado por un identificador único (PID, process identifier). Un archivo es una colección de datos, creados por los usuarios utilizando editores de texto, compiladores, etc. Archivos pueden ser documentos de texto, el texto de un programa escrito en algún lenguaje de programación, una carpeta con archivos y otras carpetas, instrucciones legibles sólo por la máquina, etc.   Todos los archivos se agrupan en una estructura de directorios, en uno en más discos (igual que en Windows, en donde existen muchas particiones llamadas A:, B:, C:, etc que pueden ser discos duros, pen drive, CD-ROMs). El sistema de archivos es estructurado de forma jerárquica. La punta de la jerarquía es usualmente lo que se llama “root" y se escribe como “/". La siguiente figura muestra un ejemplo de esta jerarquía.   
+Todo en UNIX es un archivo o un proceso. Un proceso es un programa ejecutable identificado por un identificador único (PID, **P**rocess **Id**entifier). Un archivo es una colección de datos, que puede ser un documento de texto, una carpeta con archivos y otras carpetas, instrucciones legibles sólo por la máquina, etc. Todos los archivos se agrupan en una estructura de directorios o sistema de archivos. Este es estructurado de forma jerárquica, y se puede representar como un árbol. La punta de la jerarquía es usualmente lo que se llama “root" o "raíz" y se escribe como “/". Dentro de este encontramos diferentes directorios que el sistema operativo utiliza para diferentes propósitos. Por ejemplo, /lib es donde se guardan las librerías necesarias para correr los programas, en /bin encontramos los programas básicos del sistema, etc. La siguiente figura muestra un ejemplo de esta jerarquía. 
 <img src="figuras/files.jpg" width="500">
 
 ## Sistema multiusuario
 
-UNIX es un sistema operativo de ambiente multi-usuarios, en contraste con por ejemplo Windows. Cuando se tiene Windows en una PC todos los archivos son legibles y modificables por el usuario. El usuario puede, por ejemplo, borrar cualquier tipo de archivo y en principio nadie lo impide (quizás algún mensaje de advertencia de Windows). Por el contrario, en UNIX existen varios usuarios en un mismo sistema. Por lo tanto, cada archivo o directorio tiene propietarios asociados. El “home directory" (el directorio donde el usuario guarda sus archivos) es propiedad de ese usuario. Asimismo, todos los archivos que él genera. Cada archivo o carpeta tiene permisos asociados. Por ejemplo, un usuario regular puede ejecutar y leer programas del sistema, pero no puede sobre escribirlos. Un usuario puede cambiar los permisos de cualquier archivo o carpeta de su propiedad, pero no de archivos ajenos. Veremos ejemplos de esto más adelante. Ya que definimos que el sistema es de multi-usuarios tenemos que poder decirle al sistema quienes somos. Además tenemos que asegurarle al sistema que un usuario no puede hacerse pasar por otro y acceder a sus datos. Esto se logra a través de un procedimiento de “login".
+UNIX es un sistema operativo de ambiente multi-usuarios, en contraste con por ejemplo Windows. Cuando se tiene Windows en una PC todos los archivos son legibles y modificables por el usuario. El usuario puede, por ejemplo, borrar cualquier tipo de archivo y en principio nadie lo impide (quizás algún mensaje de advertencia de Windows). Por el contrario, en UNIX existen varios usuarios en un mismo sistema. Por lo tanto, cada archivo o directorio tiene propietarios asociados. El “home directory" es representado por el símbolo "~" y es propiedad de ese usuario, por lo que todos los archivos que el usuario haya generado en este directorio son de su propiedad. Con la propiedad de cada archivo o directorio vienen asociados los "permisos". Al modificar los permisos de un archivo puedo especificar qué usuarios pueden leer, escribir o ejecutar un archivo. El usuario dueño de un archivo puede modificar unicamente los permisos asociados a sus propios archivos. Un "superusuario", a diferencia de un usuario común, puede modificar, leer y escribir todos los archivos, cambiar sus propietarios, permisos, etc.
+Para que un usuario pueda entrar al sistema debe identificarse o "loguearse". Esto lo hace a traves del _login_.
 
 ## Login
 
 El administrador de sistemas tiene que proporcionarles un nombre de usuario y una contraseña inicial. Los distintos sistemas operativos tienen distintas formas de presentar la pantalla de login, ya sea como texto o como una interfaz gráfica. De cualquier manera, se deben ingresar el nombre de usuario y la contraseña. Una vez dentro del sistema, también dependiendo del sistema utilizado y del administrador de sistema, aparece la terminal, en donde se pueden ingresar los comandos. UNIX es un sistema multi-tasking también, es decir que uno puede tener varias terminales funcionando al mismo tiempo. Asimismo, existen diferentes tipos de terminales, en Linux la terminal por defecto es bash (Bourne Again SHell). Otros tipos de terminales incluyen csh, tcsh, ksh and sh. Todas tienen características similares, de cualquier forma, utilizaremos para este tutorial la terminal bash.
 
 # Manipular archivos y carpetas
+
+<img src="figuras/workflow.jpeg" width="400">
 
 Una vez hecho el login, el usuario se encuentra en su “home directory", que tiene el mismo nombre que el nombre de usuario. Abre una terminal y tipea:  
 ```
@@ -47,7 +49,7 @@ El comando `cd micarpeta` lleva al usuario a la carpeta llamada "micarpeta". Tam
 ```
 cd ..
 ```
-Este comando lleva al usuario a un nivel más arriba en el sistema de archivos, al archivo padre. Es decir, si el usuario se encuentra en la carpeta micarpeta, con `cd ..`, puede volver a salir de la misma.  
+Este comando lleva al usuario a un nivel más arriba en el sistema de archivos, al directorio padre. Es decir, si el usuario se encuentra en la carpeta micarpeta, con `cd ..`, puede volver a salir de la misma. Nótese que `..` significa _"directorio de arriba"_.
 ```
 ls
 ```
