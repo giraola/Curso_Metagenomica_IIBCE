@@ -1,4 +1,6 @@
 # Día 1: INTRODUCCIÓN A LA LÍNEA DE COMANDOS
+<img src="figuras/Workflow_Dia2.pdf" width="500">
+
 
 ## Introducción
 
