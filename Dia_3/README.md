@@ -6,9 +6,9 @@ La idea es presentar un ejemplo de determinación de la composición taxonómica
 
 ## Exploración de muestras
 
-En `~/Descargas/mgs_tutorial_Oct2017` se encuentran los datos que se utilizarán en este tutorial.
+En `~/Documentos/mgs_tutorial_Oct2017` se encuentran los datos que se utilizarán en este tutorial.
 ```
-cd ~/Descargas/mgs_tutorial_Oct2017
+cd ~/Documentos/mgs_tutorial_Oct2017
 ls -l
 ```
 
@@ -17,7 +17,42 @@ En el directorio `raw_data` se encuentran los archivos FASTQ con los _reads_ de 
 ```
 less map.txt
 ```
-Este archivo de mapeo tiene cuatro columnas: la primera con el id de cada muestra, la segunda con el tipo de muestra (Cáncer o Normal), sexo y el individuo. 
+Este archivo de mapeo tiene cuatro columnas: la primera con el id de cada muestra, la segunda con el tipo de muestra (Cáncer o Normal), la tercera el sexo, y la cuarta el individuo. 
+
+Antes de continuar es necesario descomprimir los archivos FASTQ, en el directorio `raw_data`.
+```
+gunzip raw_data/*gz
+```
+Visualicemos uno de ellos.
+```
+head -n 8 raw_data/p136C_R1.fastq
+
+@SRR3586062.883556
+CTTGGGGCTGCTGAGCTTCATGCTCCCCTCCTGCCTCAAGGACAATAAGGAGATCTTCGACAAGCCTGCAGCAGCTCGCATCGACGCCCTCATCGCTGAGG
++
+CCCFFFFFHHHHHIJJJJJJJIJIJJJJGIJDGIJEIIJIJJJJJJJJIJJJJIJJIJJJJJHHHFFFFECEEEDDDDD?BDDDDDDBDDDDDDDDBBBDD
+@SRR3586062.3376311
+GACGGTGTCCTCAGGACCCTTCAGTGCCTTCATGATCTGCTCAGAGGTGATGGAGTCACGGACGAGATTCGTCGTGTCAGCACGTAGGATGCGGTCGCCTG
++
+@@@DDDDAFF?DF;EH+ACHIIICHDEHGIGBFE@GCGDGG?D?G@BGHG@FHCGC;CC:;8ABH>BECCBCB>;8ABCCC@A@#################
+```
+**Ejercicio:**
+ - ¿Cuántos reads tiene cada FASTQ?
+
+En caso de tener datos propios, será siempre necesario analizar la calidad de la secuenciación utilizando algún programa de _quality check_, como FastQC que vimos la clase pasada.
+
+## Pre-procesamiento
+
+Aunque se podría correr todo el tutorial sobre estos datos, para ahorrar tiempo seguiremos trabajando con una sola muestra, que se encuentra en el directorio `raw_data_example`.
+
+Antes de analizar los datos es necesario realizar el _trimming_, como vimos anteriormente con Trimmomatic. Además en este caso, como se trata de muestras orales humanas, es necesario filtrar aquellos reads que pertenezcan al genoma humano. También filtraremos el genoma del fago PhiX que se utiliza como control positivo en los protocolos de armado de bibliotecas de secuenciación.
+
+
+
+
+
+
+
 
 
 
