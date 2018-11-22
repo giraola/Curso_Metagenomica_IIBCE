@@ -45,9 +45,9 @@ En caso de tener datos propios, será siempre necesario analizar la calidad de l
 
 Aunque se podría correr todo el tutorial sobre estos datos, para ahorrar tiempo seguiremos trabajando con una sola muestra, que se encuentra en el directorio `raw_data_example`.
 
-Antes de analizar los datos es necesario realizar el _trimming_, como vimos anteriormente con Trimmomatic. Además en este caso, como se trata de muestras orales humanas, es necesario filtrar aquellos reads que pertenezcan al genoma humano. También filtraremos el genoma del fago PhiX que se utiliza como control positivo en los protocolos de armado de bibliotecas de secuenciación.
+Antes de analizar los datos es necesario realizar el _trimming_, como vimos anteriormente con [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic). Además en este caso, como se trata de muestras orales humanas, es necesario filtrar aquellos reads que pertenezcan al genoma humano. También filtraremos el genoma del fago PhiX que se utiliza como control positivo en los protocolos de armado de bibliotecas de secuenciación. Para ello se mapean los reads contra los genomas de los organismos "contaminantes", y aquellos que alínean son removidos del set. Acontinuación se utiliza [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) en modo _paired-end_.
 
-
+Usaremos [KneadData](https://bitbucket.org/biobakery/kneaddata/wiki/Home), una herramienta que convenientemente llama a ambos programas y realiza el pre-procesamieno en un sólo comando.
 
 
 
