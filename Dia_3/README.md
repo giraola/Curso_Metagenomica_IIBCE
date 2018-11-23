@@ -45,9 +45,66 @@ En caso de tener datos propios, será siempre necesario analizar la calidad de l
 
 Aunque se podría correr todo el tutorial sobre estos datos, para ahorrar tiempo seguiremos trabajando con una sola muestra, que se encuentra en el directorio `raw_data_example`.
 
-Antes de analizar los datos es necesario realizar el _trimming_, como vimos anteriormente con [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic). Además en este caso, como se trata de muestras orales humanas, es necesario filtrar aquellos reads que pertenezcan al genoma humano. También filtraremos el genoma del fago PhiX que se utiliza como control positivo en los protocolos de armado de bibliotecas de secuenciación. Para ello se mapean los reads contra los genomas de los organismos "contaminantes", y aquellos que alínean son removidos del set. Acontinuación se utiliza [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) en modo _paired-end_.
+Antes de analizar los datos es necesario realizar el _trimming_, como vimos anteriormente con [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic). 
 
-Usaremos [KneadData](https://bitbucket.org/biobakery/kneaddata/wiki/Home), una herramienta que convenientemente llama a ambos programas y realiza el pre-procesamieno en un sólo comando.
+```
+mkdir trim_out
+trimmomatic PE -threads 2 -phred33 raw_data_example/p144C_R1.fastq raw_data_example/p144C_R2.fastq trim_out/p144C_pR1.fastq trim_out/p144C_uR1.fastq trim_out/p144C_pR2.fastq trim_out/p144C_uR2.fastq SLIDINGWINDOW:4:20 MINLEN:50
+```
+**Ejercicio:**
+ - ¿Cuántos reads pareados sobreviven al proceso de _trimming_?
+ - ¿Qué sugiere para aumentarlo?
+
+
+Además en este caso, como se trata de muestras orales humanas, es necesario filtrar aquellos reads que pertenezcan al genoma humano. Para ello se mapean los reads contra el genoma del organismo "contaminante", y aquellos que alínean son removidos del set. Acontinuación se utiliza [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) en modo _paired-end_.
+<!---
+Descarga de base de datos para bowtie: wget http://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_Bowtie2_v0.1.tar.gz
+-->
+
+```
+mkdir bowtie2_Hs_filtered
+bowtie2 --very-sensitive --dovetail -x /home/pasteur/Downloads/Hs_bowtie2db/Homo_sapiens -1 trim_out/p144C_pR1.fastq -2 trim_out/p144C_pR2.fastq -U trim_out/p144C_uR1.fastq,trim_out/p144C_uR2.fastq --un-conc bowtie2_Hs_filtered/ --threads 6 -S /dev/null 2> bowtie2_Hs_filtered/summary.txt
+```
+
+La opción `--un-conc` permite extraer aquellos reads que **NO** mapeen contra la referencia (en este caso, el genoma humano) de forma concordante. En el archivo `bowtie2_hs_filtered/summary.txt` se reporta un resumen del resultado. 
+
+**Ejercicio:**
+ - ¿Cuánta contaminación de humano había?
+ - ¿A qué corresponden los archivos `un-conc-mate.1` y `un-conc-mate.2`?
+
+
+Por último es necesario concatenar los pares de reads ya que MetaPhlAn2 y HUMAnN2 no utilizan información de los reads pareados, lo cual haremos mediante el script `concat_paired_end.pl`.
+
+En primer lugar es necesario cambiar los nombres de los archivos del paso anterior para que el script `concat_paired_end.pl` identifique los pares de archivos FASTQ. En este caso, como se mencionó, se realizará para **una sola muestra** por razones de tiempo, pero estandarizar los nombres sirve cuando trabajamos con un gran número de muestras.
+
+Recordemos que el comando `mv` sirve para mover archivos, y para cambiarles el nombre.
+
+```
+mv bowtie2_Hs_filtered/un-conc-mate.1 sample_1.fastq
+mv bowtie2_Hs_filtered/un-conc-mate.2 sample_2.fastq
+```
+Llamamos al script.
+```
+concat_paired_end.pl
+```
+
+**Ejercicio:**
+ - ¿Cuál es el resultado?
+
+
+## Análisis taxonómico y funcional con MetaPhlAn2 y HUMAnN2
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
