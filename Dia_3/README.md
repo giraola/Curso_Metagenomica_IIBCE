@@ -2,7 +2,9 @@
 
 Hoy se analizarán datos de secuenciación masiva utilizando [MetaPhlAn2](http://huttenhower.sph.harvard.edu/metaphlan2) y [HUMAnN2](http://huttenhower.sph.harvard.edu/humann2). Este tutorial está basado en el tutorial [Metagenomics Tutorial (HUMAnN2)](https://github.com/LangilleLab/microbiome_helper/wiki/Metagenomics-Tutorial-(Humann2)) de [Microbiome Helper](https://github.com/LangilleLab/microbiome_helper/wiki), aunque contiene algunas modificaciones. Es importante señalar que este tipo de análisis es, en general, exploratorio y que un buen análisis requiere además un curado manual que dependenderá de cada caso de estudio y de la pregunta a responder.
 
-La idea es presentar un ejemplo de determinación de la composición taxonómica y funcional de varias muestras metagenómicas. Se utilizará como caso de estudio un _sub-set_ de los datos presentados en [Schmidt et al. (2014)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098741), trabajo en el cual se analizan cambios en el microbioma oral asociados a cáncer oral. **Atenti: estos datos representan un muestreo muy poco representativo de los originales, ya que es imposible trabajar con tal volumen de datos en las computadoras disponibles.**
+La idea es presentar un ejemplo de determinación de la composición taxonómica y funcional de varias muestras metagenómicas. Se utilizará como caso de estudio un _sub-set_ de los datos presentados en [Schmidt et al. (2014)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098741), trabajo en el cual se analizan cambios en el microbioma oral asociados a cáncer oral. 
+
+**Atenti: estos datos representan un muestreo muy poco representativo de los originales, ya que es imposible trabajar con tal volumen de datos en las computadoras disponibles.**
 
 ## Exploración de muestras
 
@@ -94,7 +96,9 @@ concat_paired_end.pl
 
 ## Análisis taxonómico y funcional con MetaPhlAn2 y HUMAnN2
 
+[MetaPhlan2](https://bitbucket.org/biobakery/metaphlan2/overview) es un programa en sí mismo, y permite ajustar multitud de parámetros si estamos realizando un análisis manual. Pero dado que [HUMAnN2](https://bitbucket.org/biobakery/humann2/wiki/Home) utiliza este script de todas formas, podemos correr sólo este último y analizar los archivos que devuelve, lo cual simplifica las cosas. Ambos programas (`humann2` y `metaphlan2.py`) aceptan muchos argumentos, los cuales pueden verse utilizando el _flag_ `-h`. 
 
+Dado que `humann2` puede demorar bastante, sólo se analizará una de las muestras. Los
 
 
 
