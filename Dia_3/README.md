@@ -82,23 +82,29 @@ En primer lugar es necesario cambiar los nombres de los archivos del paso anteri
 Recordemos que el comando `mv` sirve para mover archivos, y para cambiarles el nombre.
 
 ```
-mv bowtie2_Hs_filtered/un-conc-mate.1 sample_1.fastq
-mv bowtie2_Hs_filtered/un-conc-mate.2 sample_2.fastq
+mv bowtie2_Hs_filtered/un-conc-mate.1 bowtie2_Hs_filtered/p144C_1.fastq
+mv bowtie2_Hs_filtered/un-conc-mate.2 bowtie2_Hs_filtered/p144C_2.fastq
 ```
-Llamamos al script.
+Llamamos al script, seteando el parámetro `-o cat_reads` para crear un directorio nuevo con el resultado.
 ```
-concat_paired_end.pl
+concat_paired_end.pl -p 2 --no_R_match -o cat_reads bowtie2_Hs_filtered/*fastq
 ```
 
 **Ejercicio:**
- - ¿Cuál es el resultado?
+ - Analice el resultado del script anterior.
 
 
 ## Análisis taxonómico y funcional con MetaPhlAn2 y HUMAnN2
 
+**Nota:** _Cuando se instala `humann2` es necesario a su vez instalar bases de datos que pueden llegar a ocupar buen espacio de disco (y eventualmente memoria RAM). `humann2` permite seleccionar la base de datos que se desea instalar, y hay que hacer un balance entre el grado de fineza y la capacidad de la máquina en la que estemos trabajando. La instalación local contiene la base de datos de proteínas `uniref90_ec_filtered_diamond`, lo cual significa que nos restringimos a aquellos _clusters_ de [UniRef90](https://www.uniprot.org/help/uniref) que contienen un [EC](https://en.wikipedia.org/wiki/Enzyme_Commission_number) asignado. Un análisis más detallado puede requerir máquinas más potentes. _
+
 [MetaPhlan2](https://bitbucket.org/biobakery/metaphlan2/overview) es un programa en sí mismo, y permite ajustar multitud de parámetros si estamos realizando un análisis manual. Pero dado que [HUMAnN2](https://bitbucket.org/biobakery/humann2/wiki/Home) utiliza este script de todas formas, podemos correr sólo este último y analizar los archivos que devuelve, lo cual simplifica las cosas. Ambos programas (`humann2` y `metaphlan2.py`) aceptan muchos argumentos, los cuales pueden verse utilizando el _flag_ `-h`. 
 
-Dado que `humann2` puede demorar bastante, sólo se analizará una de las muestras. Los
+Dado que `humann2` puede demorar bastante, sólo se analizará una de las muestras. El resultado para esta muestra se escribirá en el directorio `humann2_out`. El resultado para todas las muestras se encuentran en el directorio `precalculated`.
+
+```
+humann2 --threads 4 --input cat_reads/p144C.fastq --output humann2_out/
+```
 
 
 
