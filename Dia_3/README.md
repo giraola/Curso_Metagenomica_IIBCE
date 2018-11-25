@@ -100,12 +100,76 @@ concat_paired_end.pl -p 2 --no_R_match -o cat_reads bowtie2_Hs_filtered/*fastq
 
 [MetaPhlan2](https://bitbucket.org/biobakery/metaphlan2/overview) es un programa en sí mismo, y permite ajustar multitud de parámetros si estamos realizando un análisis manual. Pero dado que [HUMAnN2](https://bitbucket.org/biobakery/humann2/wiki/Home) utiliza este script de todas formas, podemos correr sólo este último y analizar los archivos que devuelve, lo cual simplifica las cosas. Ambos programas (`humann2` y `metaphlan2.py`) aceptan muchos argumentos, los cuales pueden verse utilizando el _flag_ `-h`. 
 
-Dado que `humann2` puede demorar bastante, sólo se analizará una de las muestras. El resultado para esta muestra se escribirá en el directorio `humann2_out`. El resultado para todas las muestras se encuentran en el directorio `precalculated`.
+Dado que `humann2` puede demorar bastante, sólo se analizará una de las muestras. El resultado para esta muestra se escribirá en el directorio `humann2_out`. 
 
 ```
 humann2 --threads 4 --input cat_reads/p144C.fastq --output humann2_out/
 ```
 
+Listamos el resultado:
+```
+ls -l humann2_out/
+```
+Dentro del directorio `p144C_humann2_temp` se encuentra el archivo `p144C_metaphlan_bugs_list.tsv`, el cual es el resultado principal de `metaphlan2.py` para esta muestra.
+
+El resultado precomputado para todas las muestras se encuentra en el directorio `precalculated`, en el cual se encuentran separados los resultados para cada _software_ en directorios distintos.
+
+```
+cd precalculated/
+ls
+```
+
+### HUMAnN2
+
+Trabajaremos primero con el output de HUMAnN2. 
+
+```
+ls -l humann2_out/
+```
+Existen 3 archivos por muestra. 
+ - `*_genefamilies.tsv` contiene identificadores de las familias génicas de UniRef detectadas, asociadas a una abundancia en RPK (_reads per kilobase_). Las familias génicas son grupos de secuencias codificantes de proteínas evolutivamente relacionadas que en general tienen una misma función. La abundancia de las familias génicas se encuentra estratificada para mostrar la contribución de cada unidad taxonómica. 
+ - `*_pathabundance.tsv` detalla la abundancia de cada vía metabólica en la comunidad como función de las abundancias de las reacciones que la componen, estas últimas calculadas como la sumatoria de las abundancias de genes que catalizan cada reacción. En otras palabras, la abundancia de una vía metabólica es proporcional al número de copias completas de dicha vía en la comunidad.
+ - `*pathcoverage.tsv` provee una descripción alternativa a la presencia o ausencia de vías metabólicas en una comunidad, independiente de su abundancia cuantitativa. En este caso, una vía metabólica puede estar consistentemente cubierta a nivel de la comundidad, pero no consistentemente a nivel de ninguna especie.
+
+Más detalles de los archivos de salida de HUMAnN2 pueden encontrarse en [este link](https://bitbucket.org/biobakery/humann2/wiki/Home#markdown-header-output-files).
+
+Antes de normalizar es necesario unir los _output_ de cada muestra.
+```
+mkdir humann2_final_out/
+
+humann2_join_tables -s --input humann2_out/ --file_name pathabundance --output humann2_final_out/humann2_pathabundance.tsv
+humann2_join_tables -s --input humann2_out/ --file_name pathcoverage --output humann2_final_out/humann2_pathcoverage.tsv
+humann2_join_tables -s --input humann2_out/ --file_name genefamilies --output humann2_final_out/humann2_genefamilies.tsv
+
+ls -l humann2_final_out/
+```
+Para normalizar las tablas (es decir, llevar los valores de abundancia a un porcentaje o proporción, de modo que todas las muestras queden comparables), existen muchas metodologías disponibles. Aquí usaremos las herramientas que ya provee HUMAnN2.
+
+```
+humann2_renorm_table --input humann2_final_out/humann2_pathabundance.tsv --units relab --output humann2_final_out/humann2_pathabundance_relab.tsv
+humann2_renorm_table --input humann2_final_out/humann2_genefamilies.tsv --units relab --output humann2_final_out/humann2_genefamilies_relab.tsv
+
+ls -ltr humann2_final_out/
+```
+
+Por último usaremos el script `humann2_split_stratified_table` para crear un archivo con la información estratificada y otro con la información no estratificada (es decir, con la información de cada vía con varias unidades taxonómicas, colapsadas en un sólo valor de abundancia).
+
+```
+humann2_split_stratified_table --input humann2_final_out/humann2_pathabundance_relab.tsv --output humann2_final_out
+humann2_split_stratified_table --input humann2_final_out/humann2_genefamilies_relab.tsv --output humann2_final_out
+humann2_split_stratified_table --input humann2_final_out/humann2_pathcoverage.tsv --output humann2_final_out
+
+ls -ltr humann2_final_out/
+```
+
+### MetaPhlAn2
+
+Como vimos que HUMAnN2 también corre MetaPhlAn2 como paso inicial, podemos usar este _output_ para obtener la composición de nuestras muestras. Para ello es necesario colapsar todos los resultados de MetaPhlAn2 en un solo archivo.
+
+```
+mkdir metaphlan2_final_output/
+merge_metaphlan_tables.py precalculated/metaphlan2_out/*tsv > metaphlan2_final_output/metaphlan2_merged.tsv
+```
 
 
 
