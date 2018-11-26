@@ -171,6 +171,9 @@ mkdir metaphlan2_final_output/
 merge_metaphlan_tables.py precalculated/metaphlan2_out/*tsv > metaphlan2_final_output/metaphlan2_merged.tsv
 ```
 
+## Análisis y visualización
+
+
 
 
 
