@@ -164,7 +164,7 @@ ls -ltr humann2_final_out/
 
 ### MetaPhlAn2
 
-Como vimos que HUMAnN2 también corre MetaPhlAn2 como paso inicial, podemos usar este _output_ para obtener la composición de nuestras muestras. Para ello es necesario colapsar todos los resultados de MetaPhlAn2 en un solo archivo.
+Como vimos que HUMAnN2 también ejecuta MetaPhlAn2 como paso inicial, podemos usar este _output_ para obtener la composición de nuestras muestras. Para ello es necesario colapsar todos los resultados de MetaPhlAn2 en un solo archivo.
 
 ```
 mkdir metaphlan2_final_output/
