@@ -10,13 +10,13 @@ args = commandArgs(trailingOnly=TRUE)
 
 printUsage <- function(){
   
-  cat("Plot a PCA.\n")
+  cat("Plot a Heatmap. Variables to plot separated by comma.\n")
   
   #cat(".\n\n")
   
-  cat('\tUsage: plot_PCA.R <table> <map> <variable> <pdfName>\n\n')
+  cat('\tUsage: plot_heatmap.R <table> <map> <variables> <pdfName>\n\n')
   
-  cat('Example: plot_PCA.R merged_abundance_table_species.tsv map.txt Sample.Type pca_sampletype.pdf\n')
+  cat('Example: plot_heatmap.R merged_abundance_table_genus.tsv map.txt Sample.Type,Sex heatmap_sampletype.pdf\n')
   
 }
 
@@ -37,8 +37,10 @@ if (length(args)==0){
   }
   
   m <- read.csv(args[2], sep = '\t', stringsAsFactors = FALSE)
+  rownames(m) <- m$Sample.Id
   
-  if(!args[3]%in%colnames(m)){
+  vars <- strsplit(args[3], ',')[[1]]
+  if(!all(vars%in%colnames(m))){
     printUsage()
     stop('<variable> column is not in <map>')
   }
@@ -61,18 +63,14 @@ if (length(args)==0){
   
   m <- m[orm, ]
   
-  x2 <- as.data.frame(cbind(x, m[, -1]))
+  # x2 <- as.data.frame(cbind(x, m[, -1]))
   
-  if(!require('ggfortify')){
-    install.packages('ggfortify')
-    require('ggfortify')
+  if(!require('pheatmap')){
+    install.packages('pheatmap')
+    require('pheatmap')
   }
   
-  pca <- prcomp(x[, 1:dx[2]], center = TRUE, scale. = TRUE)
-  
-  gg <- autoplot(pca, data = x2, colour=args[3], frame = TRUE, frame.type = 'norm')
-  
-  ggsave(args[4], gg, device = 'pdf')
+  pheatmap(x, annotation_row = m[, vars, drop=F], filename = args[4])
   
 }
 
