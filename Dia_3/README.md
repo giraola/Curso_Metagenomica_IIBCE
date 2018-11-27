@@ -162,16 +162,60 @@ humann2_split_stratified_table --input humann2_final_out/humann2_pathcoverage.ts
 ls -ltr humann2_final_out/
 ```
 
+
+
 ### MetaPhlAn2
 
-Como vimos que HUMAnN2 también ejecuta MetaPhlAn2 como paso inicial, podemos usar este _output_ para obtener la composición de nuestras muestras. Para ello es necesario colapsar todos los resultados de MetaPhlAn2 en un solo archivo.
+Como vimos que HUMAnN2 también ejecuta MetaPhlAn2 como paso inicial, podemos usar este _output_ para obtener la composición de nuestras muestras. Para ello es necesario colapsar todos los resultados de MetaPhlAn2 en un sólo archivo.
 
 ```
 mkdir metaphlan2_final_output/
 merge_metaphlan_tables.py precalculated/metaphlan2_out/*tsv > metaphlan2_final_output/metaphlan2_merged.tsv
 ```
 
-## Análisis y visualización
+Este archivo tiene la información de abundancia para cada nivel taxonómico. Ejecutar el siguiente comando para crear una tabla de abundancia a nivel de especie:
+
+```
+grep -E "(s__)|(^ID)" metaphlan_final_output/metaphlan2_merged.tsv | grep -v "t__" | sed 's/^.*s__//g' > metaphlan_final_output/merged_abundance_table_species.tsv
+```
+
+El siguiente comando crea una tabla de abundancia a nivel de género:
+
+```
+grep -E "(g__)|(^ID)" metaphlan_final_output/metaphlan2_merged.tsv | grep -v "s__" | sed 's/^.*g__//g' > metaphlan_final_output/merged_abundance_table_genus.tsv
+```
+
+A partir de aquí lo que hagamos depende de nuestro objetivo de estudio. Aún así, podemos intentar "ver" la estructura de los datos a través de algunos gráficos simples. Para este tutorial se hicieron algunos scripts en lenguaje [R](https://www.r-project.org/) con este fin. 
+
+**Nota:** _Estos scripts son muy simples y no deberían ser usados para otro fin que no sea este tutorial._
+
+En primer lugar podemos plotear un heatmap de las abundancias de géneros. 
+
+```
+~/Curso_Metagenomica_IIBCE/Dia_3/custom_scripts/plot_heatmap.R
+```
+
+El script `plot_heatmap.R` acepta como primer argumento una tabla con las abundancias, el segundo argumento el archivo de mapeo ("map.txt"), en tercer lugar las variables que se quieran plotear (si es más de una, separadas por coma), y en cuarto lugar el nombre del archivo de salida (llamar al script sin argumentos para ver la ayuda).
+
+```
+~/Curso_Metagenomica_IIBCE/Dia_3/custom_scripts/plot_heatmap.R metaphlan_final_output/merged_abundance_table_genus.tsv map.txt Sample.Type,Sex heatmap_genus.pdf
+evince heatmap_genus.pdf &
+```
+Algo importante a destacar es que esta tabla **NO ESTÁ NORMALIZADA**. Metaphlan2 permite la normalización de los datos por el número de reads, pero es un paso que se debe hacer desde el principio. El resultado que estamos utilizando fue recuperado de los archivos intermedios de HUMAnN2, el cual tiene su propia metodología de normalización. Lo correcto sería normalizar esta tabla previo a realizar análisis posteriores, pero no lo vamos a hacer en este curso ya que es simplemente ilustrativo.
+
+Otra técnica básica que se utiliza para explorar la estructura de los datos es el Análisis de Componentes Principales ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis), por sus siglas en inglés). No es objeto de este curso aprender los fundamentos de la técnica, pero básicamente permite "ver" si los datos poseen cierta estructura.
+
+El script `plot_PCA.R` devuelve un plot del PCA, con los puntos coloreados según la variable que elijamos.
+
+```
+~/Curso_Metagenomica_IIBCE/Dia_3/custom_scripts/plot_PCA.R metaphlan_final_output/merged_abundance_table_genus.tsv map.txt Sample.Type pca_genus.pdf
+evince pca_genus.pdf &
+```
+
+
+**Ejercicio:**
+ - ¿Existe alguna estructura evidente en los datos?
+ - ¿Qué explica mejor la varianza en los datos, el estado del paciente (Cáncer vs Normal) o el sexo (M vs F)?
 
 
 
