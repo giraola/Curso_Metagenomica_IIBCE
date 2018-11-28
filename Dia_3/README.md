@@ -162,15 +162,17 @@ humann2_split_stratified_table --input humann2_final_out/humann2_pathcoverage.ts
 ls -ltr humann2_final_out/
 ```
 
-Un posible análisis para estos resultados sería un test de hipótesis para buscar alguna asociación entre las abundancias de vías metabólicas y las variables del archivo `map.txt`. 
-Para este tutorial se hicieron algunos scripts en lenguaje [R](https://www.r-project.org/) con este fin. 
+Para este tutorial se hicieron algunos scripts en lenguaje [R](https://www.r-project.org/) con el fin de demostrar algunos tipos de análisis exploratorios que pueden hacerse sobre los datos que devuelven ambos programas. 
 
 **Nota:** _Los scripts presentes en el directorio `custom_scripts` son muy simples y no deberían ser usados para otro fin que no sea este tutorial._
 
-Test de Hipótesis de [Wilcoxon](https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test) (no paramétrico).
+
+Un posible análisis para estos resultados sería un test de hipótesis para buscar alguna asociación entre las abundancias de vías metabólicas y las variables del archivo `map.txt`. 
+Test de Hipótesis de [Wilcoxon](https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test) (no paramétrico) para buscar asociación entre los valores de _pathcoverage_ y la variable `Sample-Type`:
 
 ```
 ~/Curso_Metagenomica_IIBCE/Dia_3/custom_scripts/wilcoxon.R humann2_final_out/humann2_pathcoverage_unstratified.tsv map.txt Sample.Type > humann2_final_out/wilcoxon-test_pathcoverage_SampleType.tsv
+head humann2_final_out/wilcoxon-test_pathcoverage_SampleType.tsv
 ```
 
 El comando devuelve una tabla con el nombre de la vía metabólica en la primer columna, y el p-value en la segunda. Con el siguiente comando buscaremos p-value menores a 0.05.
@@ -178,9 +180,14 @@ El comando devuelve una tabla con el nombre de la vía metabólica en la primer 
 ```
 awk '$2 < 0.05' humann2_final_out/wilcoxon-test_pathcoverage_SampleType
 ```
+
 **Ejercicio:** 
  - ¿Existe alguna vía diferencialmente enriquecida?
+ - Pruebe con otras variables y sobre el archivo `humann2_pathabundance_relab_unstratified.tsv`.
 
+Una forma de representar las diferencias entre muestras para cada vía metabólica diferencialmente significativa sería utilizar un [boxplot](https://en.wikipedia.org/wiki/Box_plot). No se llevará a cabo en este tutorial por falta de tiempo.
+
+**Nota:** _Probablemente el test de Wilcoxon no sea el adecuado para este tipo de datos, el ejercicio es meramente ilustrativo. Además sería necesario corregir el p-value por [multiple-testing](https://en.wikipedia.org/wiki/Multiple_comparisons_problem), luego de lo cual es probable que ninguna vía supere el umbral de significancia._
 
 
 ### MetaPhlAn2
