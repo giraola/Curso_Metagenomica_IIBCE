@@ -162,6 +162,25 @@ humann2_split_stratified_table --input humann2_final_out/humann2_pathcoverage.ts
 ls -ltr humann2_final_out/
 ```
 
+Un posible análisis para estos resultados sería un test de hipótesis para buscar alguna asociación entre las abundancias de vías metabólicas y las variables del archivo `map.txt`. 
+Para este tutorial se hicieron algunos scripts en lenguaje [R](https://www.r-project.org/) con este fin. 
+
+**Nota:** _Los scripts presentes en el directorio `custom_scripts` son muy simples y no deberían ser usados para otro fin que no sea este tutorial._
+
+Test de Hipótesis de [Wilcoxon](https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test) (no paramétrico).
+
+```
+~/Curso_Metagenomica_IIBCE/Dia_3/custom_scripts/wilcoxon.R humann2_final_out/humann2_pathcoverage_unstratified.tsv map.txt Sample.Type > humann2_final_out/wilcoxon-test_pathcoverage_SampleType.tsv
+```
+
+El comando devuelve una tabla con el nombre de la vía metabólica en la primer columna, y el p-value en la segunda. Con el siguiente comando buscaremos p-value menores a 0.05.
+
+```
+awk '$2 < 0.05' humann2_final_out/wilcoxon-test_pathcoverage_SampleType
+```
+**Ejercicio:** 
+ - ¿Existe alguna vía diferencialmente enriquecida?
+
 
 
 ### MetaPhlAn2
@@ -185,9 +204,7 @@ El siguiente comando crea una tabla de abundancia a nivel de género:
 grep -E "(g__)|(^ID)" metaphlan_final_output/metaphlan2_merged.tsv | grep -v "s__" | sed 's/^.*g__//g' > metaphlan_final_output/merged_abundance_table_genus.tsv
 ```
 
-A partir de aquí lo que hagamos depende de nuestro objetivo de estudio. Aún así, podemos intentar "ver" la estructura de los datos a través de algunos gráficos simples. Para este tutorial se hicieron algunos scripts en lenguaje [R](https://www.r-project.org/) con este fin. 
-
-**Nota:** _Estos scripts son muy simples y no deberían ser usados para otro fin que no sea este tutorial._
+A partir de aquí lo que hagamos depende de nuestro objetivo de estudio. Aún así, podemos intentar "ver" la estructura de los datos a través de algunos gráficos simples. 
 
 En primer lugar podemos plotear un heatmap de las abundancias de géneros. 
 
